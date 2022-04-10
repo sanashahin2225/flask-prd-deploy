@@ -106,12 +106,21 @@ sudo vi /etc/nginx/conf.d/virtual.conf
 ```
 server {
     listen       80;
-    server_name  3.110.188.219;
+    server_name  YOUR_PUBLIC_DNS;
 
     location / {
         proxy_pass http://0.0.0.0:5000;
     }
 }
+server {
+    listen       8080;
+    server_name  YOUR_PUBLIC_DNS;
+
+    location / {
+        proxy_pass http://0.0.0.0:8000;
+    }
+}
+
 ```
 Now test the Nginx and restart it.
 
