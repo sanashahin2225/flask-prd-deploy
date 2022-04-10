@@ -10,17 +10,13 @@ jobs:
     steps:
      - uses: actions/checkout@v1
      - run: |
-        sudo apt update -y
-	sudo apt install python3-virtualenv
-        sudo apt install python3-pip
-        sudo apt install nginx -y
-        sudo apt install supervisor -y
-    - name: Set up Python 3.8
-      uses: actions/setup-python@v2
-      with:
+        sudo apt update -y && sudo apt install nginx python3-virtualenv python3-pip supervisor -y
+       uses: actions/setup-python@v2
+     - name: Set up Python 3.8
+       with:
         python-version: 3.8
-    - name: Create Virtualenv
-      run: |
+     - name: Create Virtualenv
+       run: |
         virtualenv env
 	source env/bin/activate
     - name: Run App
