@@ -8,7 +8,7 @@ Use the package manager apt (for Ubuntu) to install packages.
 
 ```bash
 sudo apt update -y
-sudo apt install python3-virtualenv
+sudo apt install python3-virtualenv -y
 sudo apt install python3-pip -y
 sudo apt install nginx -y
 sudo apt install supervisor -y
@@ -19,6 +19,8 @@ sudo apt install supervisor -y
 
 ```bash
 mkdir flask-prd
+mkdir flask-prd/project1
+mkdir flask-prd/project2
 cd flask-prd
 ```
 
@@ -30,7 +32,7 @@ virtualenv env
 source env/bin/activate
 ```
 
-## Create the flask app
+## Create the flask app inside project1 and project2
 
 
 ```bash
@@ -42,7 +44,23 @@ app = Flask(__name__)
 	
 @app.route('/')
 def index():
-	return "Hello World"
+	return "Hello World from first app"
+	
+if __name__ == '__main__':
+   app.run(debug=True)
+
+```
+
+```bash
+vi app2.py
+```
+```python
+from flask import Flask
+app = Flask(__name__)
+	
+@app.route('/')
+def index():
+	return "Hello World from second app"
 	
 if __name__ == '__main__':
    app.run(debug=True)
@@ -52,6 +70,7 @@ if __name__ == '__main__':
 
 ```bash
 python app.py
+python app2.py
 ```
 
 # Install Gunicorn
@@ -63,6 +82,7 @@ pip install gunicorn
 
 ```bash
 gunicorn --bind 0.0.0.0:5000 app:app
+gunicorn --bind 0.0.0.0:8000 app2:app
 ```
 
 # Supervisor
@@ -73,14 +93,14 @@ sudo vi /etc/supervisor/conf.d/hello.conf
 ```
 ```
 [program:flask-prd]
-directory=/home/ubuntu/flask-prd
+directory=/home/ubuntu/flask-prd/project1
 command=/home/ubuntu/flask-prd/env/bin/gunicorn app:app -b 0.0.0.0:5000
 autostart=true
 autorestart=true
 stderr_logfile=/var/log/hello_world/hello_world.err.log
 stdout_logfile=/var/log/hello_world/hello_world.out.log
 [program:flask-prd-app2]
-directory=/home/ubuntu/flask-prd
+directory=/home/ubuntu/flask-prd/project2
 command=/home/ubuntu/flask-prd/env/bin/gunicorn app2:app -b 0.0.0.0:8000
 autostart=true
 autorestart=true
