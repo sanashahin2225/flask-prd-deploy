@@ -12,8 +12,8 @@ jobs:
     - name: executing remote ssh commands using password
       uses: appleboy/ssh-action@master
       with:
-        host: ec2-3-110-167-166.ap-south-1.compute.amazonaws.com
+        host: ec2-3-110-191-169.ap-south-1.compute.amazonaws.com
         username: ubuntu
-        key: ${{ secrets.PASSWORD }}
+        key: ${{ secrets.KEY }}
         port: 22
         script: whoami
