@@ -16,4 +16,4 @@ jobs:
         username: ubuntu
         key: ${{ secrets.KEY }}
         port: 22
-        script: cd flask-prd && ls
+        script: cd flask-prd && git pull && sudo service supervisor restart
